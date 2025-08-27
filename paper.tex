@@ -602,4 +602,61 @@ also robust, efficient, and controllable.
 \bibitem{SuttonBarto2018} Richard S. Sutton and Andrew G. Barto. \emph{Reinforcement Learning: An Introduction}. MIT Press, 2nd edition, 2018.
 \bibitem{Auer2002} Peter Auer. Using confidence bounds for exploitation-exploration trade-offs. \emph{Journal of Machine Learning Research}, 3:397--422, 2002.
 \end{thebibliography}
+% ===== Camera-ready addendum inserted by review =====
+% These sections were appended to improve clarity, reproducibility,
+% and evaluation, without disturbing existing numbering.
+% If you prefer numbered sections, remove the asterisks below.
+
+\section*{Threats to Validity}
+\textbf{Internal validity.} The contextual bandit and classification experiments use synthetic generators and fixed seeds; results may be sensitive to generator parameters and seed choice. In particular, the structural growth gate on the GRBF network can interact with reward noise and class imbalance, producing optimistic variance estimates. \textbf{Construct validity.} The acceptance tests for primitives (e.g., \emph{Makespan Reduction vs.\ FIFO} for CPCS; \emph{Token Savings} for RoI‑S) are proxy metrics for the underlying goals; some tasks (long-context QA, multi-tool workflows) may emphasize latency tail or determinism over throughput. \textbf{External validity.} Enforcement hooks leverage system features (e.g., CUDA stream priorities, Linux cgroups) that vary across platforms and may be unavailable in managed environments. \textbf{Conclusion validity.} Ablations must isolate (i) the growth budget, (ii) the plasticity rule, and (iii) scheduler changes; otherwise improvements could be attributed to stronger baselines or resource skew.
+
+\section*{Reproducibility Checklist}
+\begin{itemize}
+  \item \textbf{Code and entrypoints.} All experiments run via \texttt{neural\_organism.py} with subcommands \texttt{\{supervised, bandit, bandit\_plusmlp\}}.
+  \item \textbf{Environment.} \texttt{python$\ge$3.10}, \texttt{numpy}, \texttt{pandas}, \texttt{matplotlib}. If using GPU enforcement demos, install CUDA toolkit and enable MPS as applicable.
+  \item \textbf{Seeds.} Report seeds for each run; we used \texttt{37} for the representative contextual bandit table.
+  \item \textbf{Data generators.} Log full generator hyperparameters (class priors, drift schedule, bandit reward noise). Dump a JSON config alongside each CSV result.
+  \item \textbf{Budgets.} Record the exact growth budget schedule, plasticity coefficients, and any scheduler settings (e.g., critical‑path recompute cadence).
+  \item \textbf{Hardware.} Report CPU model, GPU model, driver/CUDA versions, and whether MPS/\texttt{cgroups.v2} were enabled.
+  \item \textbf{Figures and tables.} Commit scripts that render figures/tables from CSVs; avoid manual spreadsheet edits.
+\end{itemize}
+
+\section*{CPCS (Critical‑Path Compute Scheduler): Reference Pseudocode}
+\noindent\textbf{Goal.} Minimize expected makespan of a dynamic reasoning DAG under GPU/CPU/tool budgets while bounding starvation.
+
+\noindent\textbf{State.} Task set $T=\{t_i\}$ with attributes $(\text{id}, \text{deps}, \widehat{\eta}, p_{\text{succ}}, \text{cost\_flops}, \text{priority})$; resource pools $R_{\text{gpu}}, R_{\text{cpu}}, R_{\text{tools}}$.
+
+\noindent\textbf{Loop.}
+\begin{enumerate}
+  \item On \texttt{submit} or \texttt{update\_estimates}, recompute a stochastic ETA for each path and identify the current expected critical path $\pi^\*$.
+  \item Assign highest effective priority to tasks on $\pi^\*$ subject to budget and fairness constraints; bind GPU kernels to high‑priority CUDA streams; limit CPU shares of off‑path tasks via \texttt{cgroups.v2}; apply tool concurrency caps.
+  \item On \texttt{tick(now)}: preempt off‑path work if its marginal contribution to expected makespan reduction is negative under the current posterior.
+  \item Enforce a starvation bound: any task waiting $> \tau_{\max}$ receives a temporary priority boost.
+  \item Emit metrics: GPU busy‑time, preemption latency, makespan vs.\ FIFO, starvation violations.
+\end{enumerate}
+
+\section*{Summary of Runtime Primitives and Acceptance Criteria}
+\begin{itemize}
+  \item \textbf{CPCS.} Allocate compute to expected critical path; \emph{accept:} $\ge$10\% makespan reduction vs.\ FIFO under skewed ETAs; GPU busy‑time $\ge$90\%.
+  \item \textbf{LoT.} Defer evaluation of thunks until needed; \emph{accept:} wall‑clock $\le$70\% of eager baseline on branching tasks with identical outputs.
+  \item \textbf{RoI‑S.} Repair only erroneous span and splice; \emph{accept:} $\ge$60\% fewer regenerated tokens; deterministic hash‑verified stitches.
+  \item \textbf{IGMS.} Gate transitions between low/high‑fidelity simulators on invariants; \emph{accept:} same decision with $\le$30\% of HF calls.
+  \item \textbf{TTC.} Two‑phase tool calls with transactional commit; \emph{accept:} zero double‑execution; idempotent retries under failures.
+  \item \textbf{PSC‑CR.} Checkpoint proof state and reuse cousin branches; \emph{accept:} $\ge$20\% token reuse on similar subgoals.
+  \item \textbf{KVT‑P.} Tier and prefetch KV cache; \emph{accept:} throughput $\uparrow$ and OOM rate $\downarrow$ vs.\ naive KV handling at long context.
+  \item \textbf{IDS.} Interruptible decoding with safe resume; \emph{accept:} preemption latency $<$200\,ms; identical outputs after resume.
+  \item \textbf{CSS.} Allocate slack budget under hard constraints; \emph{accept:} constraint violations $=0$; objective improved vs.\ baseline.
+  \item \textbf{SCCH.} Canonical hash key for subgoal cache; \emph{accept:} hit‑rate $\uparrow$ and recomputation $\downarrow$ on multi‑turn tasks.
+  \item \textbf{POPB.} Per‑operator precision budgeting; \emph{accept:} latency/energy $\downarrow$ with negligible accuracy delta.
+  \item \textbf{CS‑WIF.} Compute‑safe two‑phase ``what‑if'' analysis; \emph{accept:} side‑effects isolated; rollback time $<$100\,ms.
+\end{itemize}
+
+\section*{Planned Ablations and Baselines}
+\textbf{Bandits.} Compare GRBFN+Plastic under growth budgets to LinUCB, Thompson Sampling, $\epsilon$‑greedy, and a budgeted MLP; sweep budget schedules and plasticity coefficients. \textbf{Classification.} Measure accuracy/latency/energy vs.\ fixed‑capacity MLPs and dynamic‑capacity baselines. \textbf{Scheduler.} FIFO vs.\ CPCS vs.\ priority‑only; report makespan, GPU utilization, starvation.
+
+% Footnote references for enforcement hooks (optional; comment out if undesired)
+% Linux cgroups v2: https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html
+% NVIDIA MPS: https://docs.nvidia.com/deploy/mps/index.html
+% vLLM PagedAttention (KV): https://arxiv.org/abs/2309.06180
+
 \end{document}
