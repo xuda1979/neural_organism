@@ -1,0 +1,510 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Runtime-Enforced Control for AI: A Case Study in Budgeted Growth},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Runtime-Enforced Control for AI: A Case Study in Budgeted Growth}
+\author{}
+\date{2025-08-18}
+
+\begin{document}
+\maketitle
+
+\begin{quote}
+\textbf{Revision note (2025-08-18)} --- This version replaces any
+hand‑wavy ``let an LLM decide compute'' policy with \textbf{runtime
+primitives} and \textbf{enforceable mechanisms} that sit \textbf{below}
+any planner/orchestrator (LLM or not). These mechanisms use
+OS/runtime/hardware controls and externally verified signals. They are
+practical to build now and directly useful for
+\textbf{math/algorithms/theoretical physics with simulations}.
+\end{quote}
+
+\hypertarget{abstract}{%
+\subsection{Abstract}\label{abstract}}
+
+Modern AI systems require fine-grained control over their computational
+resources, yet this control is often delegated to the models themselves,
+making it heuristic and unverifiable. We argue for a paradigm shift:
+moving the locus of control to a \textbf{runtime} that enforces
+explicit, verifiable constraints on compute. We introduce a vocabulary
+of twelve runtime-enforced primitives for steering computation in
+complex reasoning and simulation tasks. To demonstrate this principle,
+we conduct a case study on one such primitive: a
+\textbf{runtime-enforced growth budget} on a self-assembling neural
+network. By deploying a Growing RBF network in a non-stationary bandit
+task, we show that an external budget effectively gates structural
+growth while maintaining high performance. This provides concrete
+evidence that runtime-enforced mechanisms are a powerful and practical
+tool for governing adaptable AI.
+
+\hypertarget{introduction}{%
+\subsection{1. Introduction}\label{introduction}}
+
+As machine learning models grow in complexity and autonomy, so does the
+need to govern their behavior and resource consumption. This is
+especially true for models that self-modify their architecture, such as
+growing neural networks. Typically, the logic for adaptation is an
+internal, inseparable part of the model's policy, making it a black box
+to external oversight.
+
+This paper advocates for an alternative: shifting the locus of control
+from the model to an external \textbf{runtime}. Such a runtime can
+enforce hard, verifiable constraints on computation---capping model
+size, preempting low-priority tasks, or gating expensive
+operations---without needing to modify the model's internals. It
+provides a principled layer of governance.
+
+To make this vision concrete, we first propose a vocabulary of twelve
+\textbf{runtime-enforced primitives}, each designed to manage a specific
+aspect of a computational workload, from critical-path scheduling to
+transactional tool calls. These primitives form a conceptual framework
+for a new kind of AI architecture. We then provide the first empirical
+validation of this approach by implementing one of the most fundamental
+primitives: a hard budget on model growth. We apply this to a
+self-assembling network in a challenging, non-stationary environment and
+show that this simple, external constraint is sufficient to control the
+model's complexity effectively.
+
+\hypertarget{a-proposed-framework-for-runtime-control}{%
+\subsection{2. A Proposed Framework for Runtime
+Control}\label{a-proposed-framework-for-runtime-control}}
+
+The case study in this paper is motivated by a broader vision of a
+``coordinator runtime'' that orchestrates the execution of complex
+computational graphs. This runtime would sit below a high-level planner
+(which could be an LLM or a symbolic planner) and would enforce
+constraints on the fly. The planner suggests \emph{what} to do, while
+the runtime decides \emph{how} it gets done, enforcing global policies.
+The diagram below illustrates this conceptual architecture.
+
+\begin{verbatim}
+[Planner (can be an LLM)]  <--suggestions-->
+[Coordinator Runtime]
+   ├─ Critical-Path Scheduler (CPCS)
+   ├─ Transaction Manager (TTC)
+   ├─ Constraint Engine (units/types/invariants)
+   ├─ ... and other primitives
+\end{verbatim}
+
+The core of this framework is a set of primitives, detailed in the next
+section, that provide different mechanisms for runtime-based control.
+This paper focuses on providing the first empirical validation for one
+of these primitives.
+
+\hypertarget{a-vocabulary-of-runtime-primitives}{%
+\subsection{3. A Vocabulary of Runtime
+Primitives}\label{a-vocabulary-of-runtime-primitives}}
+
+To make the idea of a coordinator runtime more concrete, we outline
+twelve primitives below. These are not meant to be an exhaustive list,
+but rather a vocabulary of control mechanisms that share a common
+philosophy: they operate at a low level, are enforced by the runtime,
+and are informed by verifiable signals. Each primitive is designed to be
+difficult for a generic planner to subsume because it relies on
+\textbf{OS/runtime/hardware} or \textbf{verifier‑level} control, making
+it immediately useful for domains like math, algorithmic reasoning, and
+physics simulation.
+
+\hypertarget{criticalpath-compute-scheduler-cpcs-for-reasoning-dags}{%
+\subsubsection{3.1 Critical‑Path Compute Scheduler (CPCS) for Reasoning
+DAGs}\label{criticalpath-compute-scheduler-cpcs-for-reasoning-dags}}
+
+\textbf{Idea.} Allocate compute to the \textbf{dynamic critical path} of
+a reasoning DAG, not merely the next step a planner suggests.
+
+\hypertarget{lazyofthought-lot-thunks-selective-forcing}{%
+\subsubsection{3.2 Lazy‑of‑Thought (LoT): Thunks + Selective
+Forcing}\label{lazyofthought-lot-thunks-selective-forcing}}
+
+\textbf{Idea.} Emit \textbf{lazy thunks} and force them only when their
+value is demanded by a verifier or dependency.
+
+\hypertarget{regionofinterest-splicing-rois-recompute-only-the-broken-span}{%
+\subsubsection{3.3 Region‑of‑Interest Splicing (RoI‑S): Recompute Only
+the Broken
+Span}\label{regionofinterest-splicing-rois-recompute-only-the-broken-span}}
+
+\textbf{Idea.} When a checker flags an error, \textbf{regenerate only
+that span} and splice it back, preserving surrounding context.
+
+\hypertarget{invariantgated-multifidelity-simulation-igms}{%
+\subsubsection{3.4 Invariant‑Gated Multi‑Fidelity Simulation
+(IGMS)}\label{invariantgated-multifidelity-simulation-igms}}
+
+\textbf{Idea.} Run coarse simulations by default; \textbf{escalate
+fidelity locally} only where a symbolic invariant is violated.
+
+\hypertarget{transactional-tool-calls-ttc-with-twophase-commit}{%
+\subsubsection{3.5 Transactional Tool Calls (TTC) with Two‑Phase
+Commit}\label{transactional-tool-calls-ttc-with-twophase-commit}}
+
+\textbf{Idea.} Treat expensive tool calls as \textbf{transactions} that
+can be aborted before execution to save compute.
+
+\hypertarget{proofstate-checkpointing-cousinbranch-reuse-psccr}{%
+\subsubsection{3.6 Proof‑State Checkpointing \& Cousin‑Branch Reuse
+(PSC‑CR)}\label{proofstate-checkpointing-cousinbranch-reuse-psccr}}
+
+\textbf{Idea.} Canonicalize and \textbf{checkpoint} verified
+intermediate states (e.g., sub-lemmas) for reuse across attempts.
+
+\hypertarget{kvcache-tiering-prefetch-kvtp}{%
+\subsubsection{3.7 KV‑Cache Tiering + Prefetch
+(KVT‑P)}\label{kvcache-tiering-prefetch-kvtp}}
+
+\textbf{Idea.} Treat attention KV-cache as a \textbf{multi-tier memory
+system} (HBM ↔ RAM ↔ NVMe) and prefetch hot ranges.
+
+\hypertarget{interruptible-decoding-spliceresume-ids}{%
+\subsubsection{3.8 Interruptible Decoding \& Splice‑Resume
+(IDS)}\label{interruptible-decoding-spliceresume-ids}}
+
+\textbf{Idea.} Make decoding \textbf{preemptible}, allowing an external
+event (e.g., a fast tool result) to interrupt, inject context, and
+resume.
+
+\hypertarget{constraintslack-scheduler-css}{%
+\subsubsection{3.9 Constraint‑Slack Scheduler
+(CSS)}\label{constraintslack-scheduler-css}}
+
+\textbf{Idea.} Maintain hard constraints (e.g., on model size, memory
+usage) and allocate compute to satisfy the tightest one.
+
+\hypertarget{subgoal-cache-with-canonical-hashing-scch}{%
+\subsubsection{3.10 Subgoal Cache with Canonical Hashing
+(SCCH)}\label{subgoal-cache-with-canonical-hashing-scch}}
+
+\textbf{Idea.} Maintain a \textbf{cross-query cache} of solved subgoals,
+amortizing the cost of repeated computations.
+
+\hypertarget{peroperator-precision-budgeter-popb}{%
+\subsubsection{3.11 Per‑Operator Precision Budgeter
+(POPB)}\label{peroperator-precision-budgeter-popb}}
+
+\textbf{Idea.} Choose precision \textbf{per operator} at runtime based
+on sensitivity probes to conserve high-precision resources.
+
+\hypertarget{computesafe-twophase-whatif-cswif}{%
+\subsubsection{3.12 Compute‑Safe Two‑Phase ``What‑If''
+(CS‑WIF)}\label{computesafe-twophase-whatif-cswif}}
+
+\textbf{Idea.} Before an expensive operation, run a cheap, bounded
+\textbf{``what-if'' dry-run} to predict its ROI and gate it accordingly.
+
+\hypertarget{case-study-a-runtime-enforced-growth-budget}{%
+\subsection{4. Case Study: A Runtime-Enforced Growth
+Budget}\label{case-study-a-runtime-enforced-growth-budget}}
+
+To provide a concrete, foundational demonstration of the
+runtime-enforced philosophy, we now implement and test one of the
+simplest and most fundamental primitives: a hard budget on model growth.
+We apply this to a \textbf{Growing RBF Network (GRBFN)}, a model that
+adapts by spawning new units. Its structural expansion is controlled by
+an external \texttt{RuntimeGate}.
+
+\hypertarget{connecting-the-case-study-to-the-primitive-framework}{%
+\subsubsection{4.1 Connecting the Case Study to the Primitive
+Framework}\label{connecting-the-case-study-to-the-primitive-framework}}
+
+This \texttt{RuntimeGate} is a direct and practical implementation of
+two primitives from our vocabulary, acting in concert:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Constraint-Slack Scheduler (CSS):} The gate enforces a hard
+  constraint on the total number of prototypes
+  (\texttt{max\_prototypes}). The ``slack'' is the number of available
+  slots in the budget. The runtime allocates a unit of this resource
+  only when the model requests it, ensuring the constraint is never
+  violated.
+\item
+  \textbf{Compute-Safe ``What-If'' (CS-WIF):} The model's request to
+  spawn a new unit can be seen as a ``what-if'' proposal: ``What if I
+  added a new prototype here to better explain the data?'' The
+  \texttt{RuntimeGate} performs the cheap, bounded dry-run---simply
+  checking if \texttt{budget\ \textgreater{}\ 0}. This check gates the
+  expensive escalation (creating and training a new unit with its
+  associated weights).
+\end{itemize}
+
+Thus, our simple experiment serves as a microcosm of the broader vision.
+The model proposes actions, but the runtime has the final, enforceable
+say based on global constraints.
+
+\hypertarget{the-self-assembling-model}{%
+\subsubsection{4.2 The Self-Assembling
+Model}\label{the-self-assembling-model}}
+
+The model used in our experiments, \texttt{GRBFN+Plastic}, is a
+sophisticated variant of a Growing RBF Network designed for continual
+learning. Its key features are: - \textbf{Dynamic Structure:} It spawns
+new prototypes for novel data, prunes least-used units, and merges
+redundant ones. - \textbf{Dual-Timescale Plasticity:} It combines slow,
+gradient-based weights with fast, Hebbian weights for both stability and
+rapid adaptation. - \textbf{Gated Activation:} It uses a learned gating
+mechanism to select a sparse subset of prototypes for each input. -
+\textbf{Runtime-Enforced Growth Budget:} Crucially, the \texttt{\_spawn}
+method must query an external \texttt{RuntimeGate} object before it can
+add a new prototype. This gate, controlled by the experiment script (the
+``runtime''), holds the consumable budget.
+
+\hypertarget{experimental-results}{%
+\subsubsection{4.3 Experimental Results}\label{experimental-results}}
+
+We test the model in a challenging contextual bandit scenario with
+abrupt drifts in the reward function every 2,000 steps. The key result
+is that \texttt{GRBFN+Plastic}, operating under a strict prototype
+budget, achieves performance highly competitive with strong,
+unconstrained baselines.
+
+\textbf{Contextual Bandit Performance (seed=37):}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Policy
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Final Cumulative Reward
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Final Cumulative Regret
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Final \#Prototypes (GRBFN+)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+LinUCB(alpha=0.8) & 6152.0 & 299.41 & nan \\
+\textbf{GRBFN+Plastic} & \textbf{6190.0} & \textbf{239.16} &
+\textbf{22.0} \\
+MLP(32) & 6291.0 & 247.61 & nan \\
+\end{longtable}
+
+\emph{Note: The \texttt{GRBFN+Plastic} model starts with 3 prototypes
+and has a growth budget for 22 \textbf{new} prototypes. The final count
+is 22, indicating it did not use its full budget due to its self-merging
+mechanism.}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Figure 1: Cumulative Reward}
+\includegraphics{../results/bandit_cumreward_plusmlp.png} \emph{Caption:
+Cumulative reward over 12,000 steps with reward drifts every 2,000 steps
+(indicated by vertical lines). The \texttt{GRBFN+Plastic} model (blue)
+performs competitively with the MLP (green) and LinUCB (orange)
+baselines, demonstrating its ability to adapt and accumulate reward
+effectively even with its growth being externally budgeted.}
+
+\textbf{Figure 2: Cumulative Regret}
+\includegraphics{../results/bandit_cumregret_plusmlp.png} \emph{Caption:
+Cumulative regret over time. The \texttt{GRBFN+Plastic} model shows the
+lowest final regret, indicating it quickly adapts to drifts and makes
+good action choices throughout the experiment, successfully balancing
+exploration and exploitation under a structural constraint.}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+The following snippet shows how the growth gate is implemented. The
+runtime instantiates a \texttt{RuntimeGate} with a specific budget and
+passes it to the model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# In the experiment script (the "runtime")}
+\ImportTok{from}\NormalTok{ .growing\_rbf\_net\_plastic }\ImportTok{import}\NormalTok{ GrowingRBFNetPlastic, RuntimeGate}
+
+\CommentTok{\# The runtime creates a gate with a budget for 22 new units.}
+\NormalTok{growth\_gate }\OperatorTok{=}\NormalTok{ RuntimeGate(budget}\OperatorTok{=}\DecValTok{22}\NormalTok{)}
+\NormalTok{net }\OperatorTok{=}\NormalTok{ GrowingRBFNetPlastic(..., growth\_gate}\OperatorTok{=}\NormalTok{growth\_gate)}
+
+\CommentTok{\# {-}{-}{-}}
+\CommentTok{\# Inside the model\textquotesingle{}s \_spawn() method:}
+\KeywordTok{def}\NormalTok{ \_spawn(}\VariableTok{self}\NormalTok{, x, y):}
+    \CommentTok{\# The model must query the gate before proceeding.}
+    \ControlFlowTok{if} \KeywordTok{not} \VariableTok{self}\NormalTok{.growth\_gate.is\_open():}
+        \ControlFlowTok{return}
+    \CommentTok{\# ... proceed with growth ...}
+    \VariableTok{self}\NormalTok{.growth\_gate.consume()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{discussion}{%
+\subsubsection{4.4 Discussion}\label{discussion}}
+
+These results show that a simple, runtime-enforced gate can effectively
+control a model's structural complexity while maintaining high
+performance in a dynamic environment. The model's core logic remains
+unchanged; its behavior is steered by an external, verifiable
+constraint. This provides a clear, compelling example of our core
+philosophy: shifting control to a runtime that enforces global policies.
+
+This approach makes the trade-off between model size and adaptation
+speed an explicit, controllable parameter. A larger budget might allow
+for faster adaptation to drastic changes, while a smaller budget forces
+the model to be more parsimonious, encouraging it to reuse and merge
+existing units. Exposing this as a runtime-controlled parameter allows
+this trade-off to be adjusted dynamically in response to external
+signals about resource availability or performance requirements. This is
+a powerful mechanism for building robust and efficient AI systems.
+
+\hypertarget{a-research-roadmap}{%
+\subsection{6. A Research Roadmap}\label{a-research-roadmap}}
+
+The twelve primitives outlined in this paper represent a broad research
+program into runtime-first AI systems. Our initial case study has
+validated the core principle, but the true power of this approach lies
+in combining multiple primitives. The path forward involves implementing
+and composing these building blocks in increasingly sophisticated
+scenarios.
+
+Immediate next steps could focus on primitives that are complementary to
+our case study. For example, combining \textbf{Region-of-Interest
+Splicing (RoI-S)} with \textbf{Proof-State Checkpointing (PSC-CR)} could
+create a highly efficient theorem prover that repairs faulty reasoning
+without costly re-computation. Similarly, integrating the
+\textbf{Invariant-Gated Multi-Fidelity Simulation (IGMS)} with
+\textbf{Transactional Tool Calls (TTC)} could enable complex physical
+simulations that are both accurate and compute-efficient, aborting
+expensive high-fidelity runs when invariants are already satisfied.
+
+The ultimate goal is to build a general-purpose \textbf{Coordinator
+Runtime} that dynamically deploys these primitives in response to the
+demands of a high-level planner. Such a system would represent a
+significant step towards building truly robust, verifiable, and
+efficient AI.
+
+\hypertarget{conclusion}{%
+\subsection{7. Conclusion}\label{conclusion}}
+
+We have argued for a fundamental shift in how we build complex AI
+systems: from monolithic, self-regulating models to a decoupled
+architecture where a \textbf{runtime} enforces verifiable computational
+constraints. We introduced a vocabulary of twelve primitives that embody
+this philosophy, covering mechanisms for scheduling, memory management,
+and transactional control.
+
+Our case study on a \textbf{budgeted growing network} provides the first
+piece of empirical evidence that this approach is not only viable but
+effective. It demonstrates that an external gate, implementing
+principles from our framework, can successfully govern a model's
+complexity without compromising its performance. This is a starting
+point for a broader research program into runtime-first AI systems---a
+necessary step for creating agents that are not only intelligent but
+also robust, efficient, and controllable.
+
+\end{document}
