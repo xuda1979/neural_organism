@@ -174,6 +174,7 @@ primitives: a hard budget on model growth. We apply this to a
 self-assembling network in a challenging, non-stationary environment and
 show that this simple, external constraint is sufficient to control the
 model's complexity effectively.
+This approach aligns with foundational work in reinforcement learning~\cite{SuttonBarto2018} and contextual bandit methods like LinUCB~\cite{Auer2002}.
 
 \hypertarget{a-proposed-framework-for-runtime-control}{%
 \subsection{2. A Proposed Framework for Runtime
@@ -403,7 +404,7 @@ mechanism.}
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Figure 1: Cumulative Reward}
-\includegraphics{../results/bandit_cumreward_plusmlp.png} \emph{Caption:
+\emph{
 Cumulative reward over 12,000 steps with reward drifts every 2,000 steps
 (indicated by vertical lines). The \texttt{GRBFN+Plastic} model (blue)
 performs competitively with the MLP (green) and LinUCB (orange)
@@ -411,7 +412,7 @@ baselines, demonstrating its ability to adapt and accumulate reward
 effectively even with its growth being externally budgeted.}
 
 \textbf{Figure 2: Cumulative Regret}
-\includegraphics{../results/bandit_cumregret_plusmlp.png} \emph{Caption:
+\emph{
 Cumulative regret over time. The \texttt{GRBFN+Plastic} model shows the
 lowest final regret, indicating it quickly adapts to drifts and makes
 good action choices throughout the experiment, successfully balancing
@@ -426,7 +427,7 @@ passes it to the model.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# In the experiment script (the "runtime")}
-\ImportTok{from}\NormalTok{ .growing\_rbf\_net\_plastic }\ImportTok{import}\NormalTok{ GrowingRBFNetPlastic, RuntimeGate}
+\ImportTok{from}\NormalTok{ neural_organism }\ImportTok{import}\NormalTok{ GrowingRBFNetPlastic, RuntimeGate}
 
 \CommentTok{\# The runtime creates a gate with a budget for 22 new units.}
 \NormalTok{growth\_gate }\OperatorTok{=}\NormalTok{ RuntimeGate(budget}\OperatorTok{=}\DecValTok{22}\NormalTok{)}
@@ -507,4 +508,8 @@ point for a broader research program into runtime-first AI systems---a
 necessary step for creating agents that are not only intelligent but
 also robust, efficient, and controllable.
 
+\begin{thebibliography}{9}
+\bibitem{SuttonBarto2018} Richard S. Sutton and Andrew G. Barto. \emph{Reinforcement Learning: An Introduction}. MIT Press, 2nd edition, 2018.
+\bibitem{Auer2002} Peter Auer. Using confidence bounds for exploitation-exploration trade-offs. \emph{Journal of Machine Learning Research}, 3:397--422, 2002.
+\end{thebibliography}
 \end{document}

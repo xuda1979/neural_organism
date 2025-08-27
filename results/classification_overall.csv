@@ -1,4 +1,0 @@
-Model,Overall Accuracy
-GRBFN+Plastic,0.9004
-LogisticSGD,0.7398
-MLPOnline,0.8269
