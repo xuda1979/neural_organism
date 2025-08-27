@@ -1,3 +1,72 @@
+"""Runtime-Enforced Control for AI
+=================================
+
+This module unifies all source code and documentation for the project
+"Runtime-Enforced Control for AI: A Case Study in Budgeted Growth".
+It historically consisted of multiple subpackages (`runner`, `config`,
+`growing_rbf_net_plastic`, `baselines`, `data_generators`,
+`experiment_utils`) and a separate paper directory.  All functionality
+and narrative material now live in just two files: this Python module and
+``paper.tex``.
+
+The repository explores a vocabulary of twelve runtime-enforced
+primitives for governing computation.  A concrete case study implements a
+runtime-enforced growth budget on a self-assembling network.  Key
+runtime primitives include:
+
+1. Critical-Path Compute Scheduler (CPCS)
+2. Lazy-of-Thought (LoT)
+3. Region-of-Interest Splicing (RoI-S)
+4. Invariant-Gated Multi-Fidelity Simulation (IGMS)
+5. Transactional Tool Calls (TTC)
+6. Proof-State Checkpointing & Cousin-Branch Reuse (PSC-CR)
+7. KV-Cache Tiering + Prefetch (KVT-P)
+8. Interruptible Decoding & Splice-Resume (IDS)
+9. Constraint-Slack Scheduler (CSS)
+10. Subgoal Cache with Canonical Hashing (SCCH)
+11. Per-Operator Precision Budgeter (POPB)
+12. Compute-Safe Two-Phase "What-If" (CS-WIF)
+
+The case study deploys a Growing RBF Network (GRBFN) whose structural
+growth is controlled by an external ``RuntimeGate`` enforcing a hard
+budget.  Experiments demonstrate that the model remains competitive with
+strong baselines while obeying this constraint.  A representative result
+from the contextual bandit setting (seed=37) is shown below:
+
+| Policy            | Final Cumulative Reward | Final Cumulative Regret | Final #Prototypes (GRBFN+) |
+| :---              | :---                    | :---                    | :---                       |
+| LinUCB            | 6152.0                  | 299.41                  | nan                        |
+| **GRBFN+Plastic** | **6190.0**              | **239.16**              | **22.0**                   |
+| MLP(32)           | 6291.0                  | 247.61                  | nan                        |
+
+Quick Start
+-----------
+
+1. **Installation**
+
+   ```bash
+   pip install numpy pandas matplotlib seaborn
+   ```
+
+2. **Running Experiments**
+
+   All experiments are launched via this script.  Choose an experiment
+   name from ``{supervised, bandit, bandit_plusmlp}``.
+
+   ```bash
+   # Run the main bandit experiment cited in the paper
+   python neural_organism.py bandit_plusmlp
+
+   # Run the supervised classification experiment
+   python neural_organism.py supervised
+   ```
+
+   Each run prints summary tables and writes figures/CSVs to the chosen
+   output directory (``--out_dir``).
+
+This file is self-contained; no other modules are required.
+"""
+
 import argparse
 import os
 from dataclasses import dataclass, field
