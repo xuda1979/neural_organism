@@ -1,0 +1,115 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{cpcs-critical-path-compute-scheduler-spec}{%
+\section{CPCS --- Critical-Path Compute Scheduler
+(Spec)}\label{cpcs-critical-path-compute-scheduler-spec}}
+
+\textbf{Goal.} Minimize expected makespan of a dynamic reasoning DAG
+under GPU/CPU/tool budgets.
+
+\hypertarget{interfaces}{%
+\subsection{Interfaces}\label{interfaces}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{submit(task:\ Task)\ -\textgreater{}\ TaskId} with fields
+  \texttt{\{id,\ deps{[}{]},\ eta\_hat,\ p\_succ,\ cost\_flops,\ priority\_hint\}}
+\item
+  \texttt{update\_estimates(task\_id,\ eta\_hat?,\ p\_succ?,\ cost\_flops?)}
+\item
+  \texttt{tick(now)} recomputes expected critical path and (re)assigns
+  resources
+\item
+  \texttt{bind(task\_id,\ resources)} where \texttt{resources} map to
+  CUDA stream IDs, CPU affinities, cgroup shares
+\item
+  \texttt{preempt(task\_id)} issues stream priority drop and/or SIGSTOP
+  to off-path processes
+\end{itemize}
+
+\hypertarget{enforcement}{%
+\subsection{Enforcement}\label{enforcement}}
+
+\begin{itemize}
+\tightlist
+\item
+  Uses \texttt{nvidia-cuda-mps} or per-stream priorities; Linux
+  \texttt{cgroups.v2} for CPU quotas
+\item
+  Preemption latency target: 50--200 ms
+\end{itemize}
+
+\hypertarget{acceptance-tests}{%
+\subsection{Acceptance Tests}\label{acceptance-tests}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Makespan Reduction vs FIFO:} ≥10\% on synthetic DAGs with
+  skewed ETAs
+\item
+  \textbf{Utilization:} GPU busy-time ≥90\% under mixed tool/decoder
+  load
+\item
+  \textbf{Stability:} No starvation for non-critical tasks beyond
+  configurable bound
+\end{enumerate}
+
+\end{document}
